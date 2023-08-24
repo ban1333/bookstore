@@ -27,16 +27,16 @@ module BookStore
 
         desc 'update a book'
         params do
-          requires :id, type: Integer, desc: 'book id'
+          requires :id, type: String, desc: 'book id'
           optional :isbn, type: Integer, desc: 'International Standard Book Number'
           optional :title, type: String, desc: 'title of the book'
           optional :stock, type: Integer, desc: 'how many books are in stock'
         end
         put ':id' do
-          Book.find(params[:id]).update({
-                                          isbn: params[:isbn],
-                                          title: params[:title],
-                                          stock: params[:stock]
+          Book.find(params[:book][:id]).update!({
+                                          isbn: params[:book][:isbn],
+                                          title: params[:book][:title],
+                                          stock: params[:book][:stock]
                                         })
         end
       end

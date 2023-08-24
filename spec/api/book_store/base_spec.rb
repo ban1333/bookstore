@@ -46,7 +46,7 @@ describe 'endpoints' do
       let(:new_stock) { book.stock+2 }
 
       it 'updates the stock of a specified book' do
-        put book_endpoint, :params => { id: book_id, book: { stock: new_stock }}
+        put book_endpoint, :params => { book: { id: book_id, stock: new_stock }}
 
         expect(Book.all.count).to be 1
         expect(Book.first.id).to eq book_id
@@ -54,7 +54,7 @@ describe 'endpoints' do
       end
 
       it 'updates the title of a specified book' do
-        put book_endpoint, :params => { id: book_id, book: {title: new_title }}
+        put book_endpoint, :params => { book: { id: book_id, title: new_title }}
 
         expect(Book.all.count).to be 1
         expect(Book.first.id).to eq book_id
@@ -62,7 +62,7 @@ describe 'endpoints' do
       end
 
       it 'updates the isbn of a specified book' do
-        put book_endpoint, :params => { id: book_id, book: {isbn: new_isbn }}
+        put book_endpoint, :params => { book: { id: book_id, isbn: new_isbn }}
 
         expect(Book.all.count).to be 1
         expect(Book.first.id).to eq book_id
@@ -70,7 +70,7 @@ describe 'endpoints' do
       end
 
       it 'updates the isbn, title and stock of a specified book' do
-        put book_endpoint, :params => { id: book_id, book: {isbn: new_isbn, title: new_title, stock: new_stock }}
+        put book_endpoint, :params => {  book: { id: book_id, isbn: new_isbn, title: new_title, stock: new_stock }}
 
         expect(Book.all.count).to be 1
         expect(Book.first.id).to eq book_id
