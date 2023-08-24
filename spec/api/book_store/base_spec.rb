@@ -79,5 +79,16 @@ describe 'endpoints' do
         expect(Book.first.stock).not_to eq book.stock
       end
     end
+
+    context 'delete' do
+      let(:book_endpoint) { '/api/v1/books/:id' }
+      let(:book) { create(:book) }
+
+      it 'deletes a book' do
+        delete book_endpoint, :params => { book: { id: book.id }}
+
+        expect(Book.count).to be 0
+      end
+    end
   end
 end

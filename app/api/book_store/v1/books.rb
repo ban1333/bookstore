@@ -39,6 +39,14 @@ module BookStore
                                           stock: params[:book][:stock]
                                         })
         end
+
+        desc 'delete a book'
+        params do
+          requires :id, type: String, desc: 'book id'
+        end
+        delete ':id' do
+          Book.find(params[:book][:id]).delete
+        end
       end
     end
   end
