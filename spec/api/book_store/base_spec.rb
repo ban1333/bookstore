@@ -82,12 +82,29 @@ describe 'endpoints' do
 
     context 'delete' do
       let(:book_endpoint) { '/api/v1/books/:id' }
-      let(:book) { create(:book) }
 
-      it 'deletes a book' do
-        delete book_endpoint, :params => { book: { id: book.id }}
+      context 'when there is one book' do
+        let(:book) { create(:book) }
 
-        expect(Book.count).to be 0
+        it 'deletes a book' do
+          delete book_endpoint, :params => { book: { id: book.id }}
+
+          expect(Book.count).to be 0
+        end
+      end
+
+      context 'when there are multiple books' do
+        let!(:book_1) { create(:book) }
+        let!(:book_2) { create(:book) }
+        let!(:book_3) { create(:book) }
+
+        it 'deletes only one book' do
+          delete book_endpoint, :params => { book: { id: book_1.id }}
+
+          expect(Book.count).to be 2
+          expect(Book.first.id).to be book_2.id
+          expect(Book.second.id).to be book_3.id
+        end
       end
     end
   end
