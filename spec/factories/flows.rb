@@ -1,16 +1,13 @@
 FactoryBot.define do
-  factory :flow do |existing_book|
-    previousStock { Faker::Number.number(digits: 4) }
-    newStock  { Faker::Number.number(digits: 4) }
-    book_id { existing_book }
-  end
-
-  factory :flow_with_new_book do
+  factory :flow do
     book
     previousStock { Faker::Number.number(digits: 4) }
     newStock  { Faker::Number.number(digits: 4) }
-    book_id { book }
   end
 
-  factory :book
+  trait :with_specified_book do |existing_book|
+    existing_book
+    previousStock { Faker::Number.number(digits: 4) }
+    newStock  { Faker::Number.number(digits: 4) }
+  end
 end

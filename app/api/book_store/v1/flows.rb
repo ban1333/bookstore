@@ -6,7 +6,21 @@ module BookStore
       prefix :api
 
       resource :flows do
+        desc 'returns a list of flows'
+        get :flows do
+          Flow.all
+        end
 
+        desc 'create a flow'
+        # need params here
+        post :flow do
+
+          Flow.create!({
+                         book: book,
+                         previousStock: previousStock,
+                         nextStock: nextStock
+                       })
+        end
       end
     end
   end
