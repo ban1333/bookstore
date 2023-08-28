@@ -166,49 +166,49 @@ describe 'endpoints' do
         end
       end
     end
-    #
-    # context 'delete' do
-    #   let(:book_endpoint) { '/api/v1/books/:id' }
-    #
-    #   context 'when there is one book' do
-    #     let(:book) { create(:book) }
-    #
-    #     it 'deletes a book' do
-    #       delete book_endpoint, :params => { book: { id: book.id }}
-    #
-    #       expect(Book.count).to be 0
-    #     end
-    #   end
-    #
-    #   context 'when there are multiple books' do
-    #     let!(:book_1) { create(:book) }
-    #     let!(:book_2) { create(:book) }
-    #     let!(:book_3) { create(:book) }
-    #
-    #     it 'deletes the first book' do
-    #       delete book_endpoint, :params => { book: { id: book_1.id }}
-    #
-    #       expect(Book.count).to be 2
-    #       expect(Book.first.id).to be book_2.id
-    #       expect(Book.second.id).to be book_3.id
-    #     end
-    #
-    #     it 'deletes the second book' do
-    #       delete book_endpoint, :params => { book: { id: book_2.id }}
-    #
-    #       expect(Book.count).to be 2
-    #       expect(Book.first.id).to be book_1.id
-    #       expect(Book.second.id).to be book_3.id
-    #     end
-    #
-    #     it 'deletes the third book' do
-    #       delete book_endpoint, :params => { book: { id: book_3.id }}
-    #
-    #       expect(Book.count).to be 2
-    #       expect(Book.first.id).to be book_1.id
-    #       expect(Book.second.id).to be book_2.id
-    #     end
-    #   end
-    # end
+
+    context 'delete' do
+      let(:flow_endpoint) { '/api/v1/flows/:id' }
+
+      context 'when there is one flow' do
+        let(:flow) { create(:flow) }
+
+        it 'deletes a flow' do
+          delete flow_endpoint, :params => { flow: { id: flow.id }}
+
+          expect(Flow.count).to be 0
+        end
+      end
+
+      context 'when there are multiple flows' do
+        let!(:flow_1) { create(:flow) }
+        let!(:flow_2) { create(:flow) }
+        let!(:flow_3) { create(:flow) }
+
+        it 'deletes the first flow' do
+          delete flow_endpoint, :params => { flow: { id: flow_1.id }}
+
+          expect(Flow.count).to be 2
+          expect(Flow.first).to eq flow_2
+          expect(Flow.second).to eq flow_3
+        end
+
+        it 'deletes the second flow' do
+          delete flow_endpoint, :params => { flow: { id: flow_2.id }}
+
+          expect(Flow.count).to be 2
+          expect(Flow.first).to eq flow_1
+          expect(Flow.second).to eq flow_3
+        end
+
+        it 'deletes the third flow' do
+          delete flow_endpoint, :params => { flow: { id: flow_3.id }}
+
+          expect(Flow.count).to be 2
+          expect(Flow.first).to eq flow_1
+          expect(Flow.second).to eq flow_2
+        end
+      end
+    end
   end
 end

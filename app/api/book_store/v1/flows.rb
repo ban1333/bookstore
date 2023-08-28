@@ -38,6 +38,14 @@ module BookStore
                                                       newStock: params[:flow][:newStock]
                                                     })
         end
+
+        desc 'delete a flow'
+        params do
+          requires :id, type: String, desc: 'the id of the flow you want to delete'
+        end
+        delete ':id' do
+          Flow.find(params[:flow][:id]).delete
+        end
       end
     end
   end
