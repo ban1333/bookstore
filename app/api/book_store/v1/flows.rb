@@ -28,14 +28,14 @@ module BookStore
 
         desc 'edit a flow'
         params do
-          requires :flowId, type: String, desc: 'the id of the flow you are editing'
+          requires :id, type: String, desc: 'the id of the flow you are editing'
           optional :previousStock, type: Integer, desc: 'the updated previous stock'
           optional :newStock, type: Integer, desc: 'the updated new stock'
         end
         put ':id' do
-          Flow.find(params[:flow][:flowId]).update!({
-                                                      previousStock: params[:flow][:previousStock],
-                                                      newStock: params[:flow][:newStock]
+          Flow.find(params[:flow][:id]).update({
+                                                      previousStock: params[:flow][:previousStock] ||= Flow.find(params[:flow][:id]).previousStock,
+                                                      newStock: params[:flow][:newStock] ||= Flow.find(params[:flow][:id]).newStock
                                                     })
         end
 
