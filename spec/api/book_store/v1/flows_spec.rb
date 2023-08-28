@@ -41,32 +41,36 @@ describe 'endpoints' do
     end
 
     context 'post' do
-      let(:flow_endpoint) { '/api/v1/flows/flows' }
+      let(:flow_endpoint) { '/api/v1/flows/flow' }
 
       let(:previous_stock) { Faker::Number.number(digits: 4) }
-      let(:next_stock) { Faker::Number.number(digits: 4) }
+      let(:new_stock) { Faker::Number.number(digits: 4) }
       let!(:book) { create(:book) }
 
       context 'when there are no flows in the database' do
         it 'creates a book in the database' do
-          post book_endpoint, :params => { flow: { book: book, previousStock: previous_stock, nextStock: next_stock }}
+          post flow_endpoint, :params => { book: book.id, previousStock: previous_stock, newStock: new_stock }
+
 
           expect(Flow.all.count).to eq 1
           expect(Flow.first.previousStock).to eq previous_stock
+          expect(Flow.first.newStock).to eq new_stock
+          expect(Flow.first.book_id).to eq book.id
         end
       end
 
       context 'when there are flows in the database' do
-        let!(:book_1) { create(:book) }
-        let!(:book_2) { create(:book) }
-        let!(:book_3) { create(:book) }
+        let!(:flow_1) { create(:flow) }
+        let!(:flow_2) { create(:flow) }
+        let!(:flow_3) { create(:flow) }
 
-        it 'creates a book in the database' do
-          post book_endpoint, :params => { isbn: isbn, title: title, stock: stock }
+        it 'creates a flow in the database' do
+          post flow_endpoint, :params => { book: book.id, previousStock: previous_stock, newStock: new_stock }
 
-          expect(Book.all.count).to eq 4
-          # TODO: refactor this so it's more robust
-          expect(Book.all.fourth.isbn).to be isbn
+          expect(Flow.all.count).to eq 4
+          expect(Flow.all.fourth.previousStock).to be previous_stock
+          expect(Flow.all.fourth.newStock).to be new_stock
+          expect(Flow.all.fourth.book_id).to be book.id
         end
       end
     end

@@ -12,13 +12,17 @@ module BookStore
         end
 
         desc 'create a flow'
-        # need params here
+        params do
+          requires :book, type: String, desc: 'the id of the book'
+          requires :previousStock, type: Integer, desc: 'the previous stock'
+          requires :newStock, type: Integer, desc: 'the next stock'
+        end
         post :flow do
 
           Flow.create!({
-                         book: book,
-                         previousStock: previousStock,
-                         nextStock: nextStock
+                         book: Book.find(params[:book]),
+                         previousStock: params[:previousStock],
+                         newStock: params[:newStock]
                        })
         end
       end
