@@ -75,96 +75,97 @@ describe 'endpoints' do
       end
     end
 
-    # context 'put' do
-    #   let(:book_endpoint) { '/api/v1/books/:id' }
-    #
-    #   context 'with one book in the database' do
-    #     let!(:book) { create(:book) }
-    #     let(:book_id) { book.id }
-    #     let(:new_isbn) { book.isbn+2 }
-    #     let(:new_title) { book.title+'ahhh' }
-    #     let(:new_stock) { book.stock+2 }
-    #
-    #     it 'updates the stock of a specified book' do
-    #       put book_endpoint, :params => { book: { id: book_id, stock: new_stock }}
-    #
-    #       expect(Book.all.count).to be 1
-    #       expect(Book.first.id).to eq book_id
-    #       expect(Book.first.stock).not_to eq book.stock
-    #     end
-    #
-    #     it 'updates the title of a specified book' do
-    #       put book_endpoint, :params => { book: { id: book_id, title: new_title }}
-    #
-    #       expect(Book.all.count).to be 1
-    #       expect(Book.first.id).to eq book_id
-    #       expect(Book.first.title).not_to eq book.title
-    #     end
-    #
-    #     it 'updates the isbn of a specified book' do
-    #       put book_endpoint, :params => { book: { id: book_id, isbn: new_isbn }}
-    #
-    #       expect(Book.all.count).to be 1
-    #       expect(Book.first.id).to eq book_id
-    #       expect(Book.first.isbn).not_to eq book.isbn
-    #     end
-    #
-    #     it 'updates the isbn, title and stock of a specified book' do
-    #       put book_endpoint, :params => {  book: { id: book_id, isbn: new_isbn, title: new_title, stock: new_stock }}
-    #
-    #       expect(Book.all.count).to be 1
-    #       expect(Book.first.id).to eq book_id
-    #       expect(Book.first.isbn).not_to eq book.isbn
-    #       expect(Book.first.title).not_to eq book.title
-    #       expect(Book.first.stock).not_to eq book.stock
-    #     end
-    #   end
-    #
-    #   context 'with multiple books in the database' do
-    #     let!(:book) { create(:book) }
-    #     let!(:extra_book_1) { create(:book) }
-    #     let!(:extra_book_2) { create(:book) }
-    #     let!(:extra_book_3) { create(:book) }
-    #     let(:book_id) { book.id }
-    #     let(:new_isbn) { book.isbn+2 }
-    #     let(:new_title) { book.title+'ahhh' }
-    #     let(:new_stock) { book.stock+2 }
-    #
-    #     it 'updates the stock of a specified book' do
-    #       put book_endpoint, :params => { book: { id: book_id, stock: new_stock }}
-    #
-    #       expect(Book.all.count).to be 4
-    #       expect(Book.first.id).to eq book_id
-    #       expect(Book.first.stock).not_to eq book.stock
-    #     end
-    #
-    #     it 'updates the title of a specified book' do
-    #       put book_endpoint, :params => { book: { id: book_id, title: new_title }}
-    #
-    #       expect(Book.all.count).to be 4
-    #       expect(Book.first.id).to eq book_id
-    #       expect(Book.first.title).not_to eq book.title
-    #     end
-    #
-    #     it 'updates the isbn of a specified book' do
-    #       put book_endpoint, :params => { book: { id: book_id, isbn: new_isbn }}
-    #
-    #       expect(Book.all.count).to be 4
-    #       expect(Book.first.id).to eq book_id
-    #       expect(Book.first.isbn).not_to eq book.isbn
-    #     end
-    #
-    #     it 'updates the isbn, title and stock of a specified book' do
-    #       put book_endpoint, :params => {  book: { id: book_id, isbn: new_isbn, title: new_title, stock: new_stock }}
-    #
-    #       expect(Book.all.count).to be 4
-    #       expect(Book.first.id).to eq book_id
-    #       expect(Book.first.isbn).not_to eq book.isbn
-    #       expect(Book.first.title).not_to eq book.title
-    #       expect(Book.first.stock).not_to eq book.stock
-    #     end
-    #   end
-    # end
+    context 'put' do
+      let(:flow_endpoint) { '/api/v1/flows/:id' }
+
+      context 'with one flow in the database' do
+        let!(:flow) { create(:flow) }
+        let!(:new_stock) { flow.newStock+2 }
+        let!(:previous_stock) { flow.previousStock+2 }
+
+        it 'updates the new stock of a specified flow' do
+          put flow_endpoint, :params => { flow: { id: flow.id, newStock: new_stock }}
+
+          expect(Flow.all.count).to be 1
+          expect(Flow.first.id).to eq flow.id
+          expect(Flow.first.newStock).to eq new_stock # errors out here
+          expect(Flow.first.newStock).not_to eq flow.newStock
+          expect(Flow.first.previousStock).to eq flow.previousStock # not sure if i need this to be a static variable
+          expect(Flow.first.newStock).to eq flow.newStock # if this errors out, the line above is fine
+        end
+
+        it 'updates the title of a specified book' do
+          put book_endpoint, :params => { book: { id: book_id, title: new_title }}
+
+          expect(Book.all.count).to be 1
+          expect(Book.first.id).to eq book_id
+          expect(Book.first.title).not_to eq book.title
+        end
+
+        it 'updates the isbn of a specified book' do
+          put book_endpoint, :params => { book: { id: book_id, isbn: new_isbn }}
+
+          expect(Book.all.count).to be 1
+          expect(Book.first.id).to eq book_id
+          expect(Book.first.isbn).not_to eq book.isbn
+        end
+
+        it 'updates the isbn, title and stock of a specified book' do
+          put book_endpoint, :params => {  book: { id: book_id, isbn: new_isbn, title: new_title, stock: new_stock }}
+
+          expect(Book.all.count).to be 1
+          expect(Book.first.id).to eq book_id
+          expect(Book.first.isbn).not_to eq book.isbn
+          expect(Book.first.title).not_to eq book.title
+          expect(Book.first.stock).not_to eq book.stock
+        end
+      end
+
+      context 'with multiple books in the database' do
+        let!(:book) { create(:book) }
+        let!(:extra_book_1) { create(:book) }
+        let!(:extra_book_2) { create(:book) }
+        let!(:extra_book_3) { create(:book) }
+        let(:book_id) { book.id }
+        let(:new_isbn) { book.isbn+2 }
+        let(:new_title) { book.title+'ahhh' }
+        let(:new_stock) { book.stock+2 }
+
+        it 'updates the stock of a specified book' do
+          put book_endpoint, :params => { book: { id: book_id, stock: new_stock }}
+
+          expect(Book.all.count).to be 4
+          expect(Book.first.id).to eq book_id
+          expect(Book.first.stock).not_to eq book.stock
+        end
+
+        it 'updates the title of a specified book' do
+          put book_endpoint, :params => { book: { id: book_id, title: new_title }}
+
+          expect(Book.all.count).to be 4
+          expect(Book.first.id).to eq book_id
+          expect(Book.first.title).not_to eq book.title
+        end
+
+        it 'updates the isbn of a specified book' do
+          put book_endpoint, :params => { book: { id: book_id, isbn: new_isbn }}
+
+          expect(Book.all.count).to be 4
+          expect(Book.first.id).to eq book_id
+          expect(Book.first.isbn).not_to eq book.isbn
+        end
+
+        it 'updates the isbn, title and stock of a specified book' do
+          put book_endpoint, :params => {  book: { id: book_id, isbn: new_isbn, title: new_title, stock: new_stock }}
+
+          expect(Book.all.count).to be 4
+          expect(Book.first.id).to eq book_id
+          expect(Book.first.isbn).not_to eq book.isbn
+          expect(Book.first.title).not_to eq book.title
+          expect(Book.first.stock).not_to eq book.stock
+        end
+      end
+    end
     #
     # context 'delete' do
     #   let(:book_endpoint) { '/api/v1/books/:id' }
