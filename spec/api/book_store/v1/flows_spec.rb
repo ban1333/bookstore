@@ -35,7 +35,7 @@ describe 'endpoints' do
           expect(JSON.parse(response.body)[0]['id']).to be flow_1.id
           expect(JSON.parse(response.body)[1]['id']).to be flow_2.id
           expect(JSON.parse(response.body)[2]['id']).to be flow_3.id
-          expect(Flow.all.count).to be 1
+          expect(Flow.all.count).to be 3
         end
       end
     end
